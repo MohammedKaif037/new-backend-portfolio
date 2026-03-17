@@ -7,6 +7,12 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Mail, Github, Linkedin, Phone, CheckCircle2, Send } from "lucide-react"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 const contactLinks = [
   {
