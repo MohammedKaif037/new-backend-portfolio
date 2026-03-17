@@ -25,13 +25,13 @@ const contactLinks = [
     icon: Linkedin,
     label: "LinkedIn",
     value: "linkedin.com/in/mohammedkaif",
-    href: "https://linkedin.com/in/mohammedkaif"
+    href: "https://www.linkedin.com/in/mohammed-kaif-a7793923a/"
   },
   {
     icon: Github,
     label: "GitHub",
     value: "github.com/kaif-dev",
-    href: "https://github.com/kaif-dev"
+    href: "https://github.com/MohammedKaif037"
   }
 ]
 
