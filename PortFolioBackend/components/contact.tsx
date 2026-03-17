@@ -40,15 +40,36 @@ export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate form submission delay
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
+  e.preventDefault()
+  setIsSubmitting(true)
+  setError(null)
+
+  const formData = new FormData(e.currentTarget)
+  const name = formData.get("name") as string
+  const email = formData.get("email") as string
+  const message = formData.get("message") as string
+
+  console.log("Supabase URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
+  console.log("Supabase Key:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 20))
+  console.log("Inserting:", { name, email, message })
+
+  const { data, error: insertError } = await supabase
+    .from("contact_submissions")
+    .insert([{ name, email, message }])
+    .select()
+
+  console.log("Insert result:", data)
+  console.log("Insert error:", insertError)
+
+  if (insertError) {
+    setError("Something went wrong. Please try again or email me directly.")
     setIsSubmitting(false)
-    setIsSubmitted(true)
+    return
   }
+
+  setIsSubmitting(false)
+  setIsSubmitted(true)
+}
 
   return (
     <section id="contact" className="py-20 bg-background">
