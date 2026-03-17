@@ -15,21 +15,7 @@ export const metadata: Metadata = {
   keywords: ['Backend Developer', 'Java Developer', 'Spring Boot', 'Microservices', 'REST APIs', 'Mohammed Kaif'],
   authors: [{ name: 'Mohammed Kaif' }],
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/MK.png', // Favicon from your old layout
   },
 }
 
