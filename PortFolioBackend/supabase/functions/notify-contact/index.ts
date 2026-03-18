@@ -13,7 +13,7 @@ serve(async (req) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "mohammedkaif8516@gmail.com",   // change this
+      from: "onboarding@resend.dev",   // change this
       to: "mohammedkaif8516@gmail.com",
       subject: `New contact form submission from ${name}`,
       html: `
