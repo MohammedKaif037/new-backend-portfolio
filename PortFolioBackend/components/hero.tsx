@@ -12,7 +12,7 @@ export function Hero() {
             Mohammed Kaif
           </h1>
           <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-primary/80 mb-6">
-            Backend Developer (Java, Spring Boot)
+            Software Engineer (Java, Spring Boot)
           </h2>
           <p className="text-lg text-muted-foreground mb-8 leading-relaxed text-pretty">
             2.5 years of experience building and maintaining high-scale e-commerce 
