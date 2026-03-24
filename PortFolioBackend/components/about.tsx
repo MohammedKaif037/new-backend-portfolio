@@ -29,7 +29,7 @@ export function About() {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           <div>
             <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              I am a Backend Developer with 2.5 years of hands-on experience building 
+              I am a Software Engineer with 2.5 years of hands-on experience building 
               and maintaining high-scale e-commerce fulfillment microservices for a 
               US Fortune 500 retail client.
             </p>
