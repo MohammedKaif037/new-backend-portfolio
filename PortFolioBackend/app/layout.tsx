@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Mohammed Kaif | Backend Developer',
-  description: 'Backend Developer with 2.5 years of experience building high-scale e-commerce microservices. Expert in Java 17, Spring Boot, REST APIs, and PCI DSS compliance.',
+  description: 'Software Engineer with 2.5 years of experience building high-scale e-commerce microservices. Expert in Java 17, Spring Boot, REST APIs, and PCI DSS compliance.',
   generator: 'v0.app',
   keywords: ['Backend Developer', 'Java Developer', 'Spring Boot', 'Microservices', 'REST APIs', 'Mohammed Kaif'],
   authors: [{ name: 'Mohammed Kaif' }],
