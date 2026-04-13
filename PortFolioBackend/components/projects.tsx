@@ -223,164 +223,168 @@ export function Projects() {
         )}
 
         {/* ── Personal ── */}
-{activeTab === "personal" && (
-  <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-    {/* Nav header */}
-    <div className="flex items-center justify-between mb-4">
-      <div className="flex gap-2">
-        {personalProjects.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => slideToProject(i, i > currentPersonal ? "right" : "left")}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-              i === currentPersonal ? "bg-accent w-6" : "bg-border hover:bg-muted-foreground"
-            }`}
-          />
-        ))}
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">{currentPersonal + 1} / {personalProjects.length}</span>
-        <button
-          onClick={prev}
-          className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
-        >
-          <ChevronLeft className="h-4 w-4 text-muted-foreground" />
-        </button>
-        <button
-          onClick={next}
-          className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
-        >
-          <ChevronRight className="h-4 w-4 text-muted-foreground" />
-        </button>
-      </div>
-    </div>
-
-    {/* Slide container */}
-    <div className="overflow-hidden">
-      <div
-        className={`transition-all duration-300 ${
-          sliding
-            ? slideDir === "right"
-              ? "-translate-x-8 opacity-0"
-              : "translate-x-8 opacity-0"
-            : "translate-x-0 opacity-100"
-        }`}
-      >
-        <Card className="border-2 border-accent/20 overflow-hidden">
-          {/* Gradient header */}
-          <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div>
-                <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
-                <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <Badge className={`w-fit border ${project.badgeColor}`}>Personal Project</Badge>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
-                >
-                  <Github className="h-3.5 w-3.5" />
-                  View on GitHub
-                  <ExternalLink className="h-3 w-3 opacity-60" />
-                </a>
-              </div>
-            </div>
-          </CardHeader>
-
-          <CardContent className="p-6">
-            {/* Overview */}
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
-
-            {/* Tech stack */}
-            <div className="mb-6">
-              <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Technologies Used</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((tech, i) => (
-                  <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
+        {activeTab === "personal" && (
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+            {/* Nav header */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex gap-2">
+                {personalProjects.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => slideToProject(i, i > currentPersonal ? "right" : "left")}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                      i === currentPersonal ? "bg-accent w-6" : "bg-border hover:bg-muted-foreground"
+                    }`}
+                  />
                 ))}
               </div>
-            </div>
-
-            {/* Highlights grid */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              {project.highlights.map((h, i) => (
-                <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
-                  <div className={`p-2 rounded-lg shrink-0 ${h.icon === Building2 ? project.iconBg : project.iconBg}`}>
-                    <h.icon className={`h-5 w-5 ${project.iconColor}`} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </div>
-)}
-
-{/* ── RAG Projects ── */}
-{activeTab === "rag" && (
-  <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-    {ragProjects.map((project, idx) => (
-      <Card key={idx} className="border-2 border-accent/20 overflow-hidden mb-6">
-        <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
-              <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
-            </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
-              >
-                <Github className="h-3.5 w-3.5" />
-                View on GitHub
-                <ExternalLink className="h-3 w-3 opacity-60" />
-              </a>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="p-6">
-          <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
-
-          <div className="mb-6">
-            <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-              Technologies Used
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.tech.map((tech, i) => (
-                <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            {project.highlights.map((h, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
-                <div className={`p-2 rounded-lg shrink-0 ${project.iconBg}`}>
-                  <h.icon className={`h-5 w-5 ${project.iconColor}`} />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground">{currentPersonal + 1} / {personalProjects.length}</span>
+                <button
+                  onClick={prev}
+                  className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4 text-muted-foreground" />
+                </button>
+                <button
+                  onClick={next}
+                  className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                </button>
               </div>
+            </div>
+
+            {/* Slide container */}
+            <div className="overflow-hidden">
+              <div
+                className={`transition-all duration-300 ${
+                  sliding
+                    ? slideDir === "right"
+                      ? "-translate-x-8 opacity-0"
+                      : "translate-x-8 opacity-0"
+                    : "translate-x-0 opacity-100"
+                }`}
+              >
+                <Card className="border-2 border-accent/20 overflow-hidden">
+                  {/* Gradient header */}
+                  <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div>
+                        <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
+                        <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
+                      </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge className={`w-fit border ${project.badgeColor}`}>Personal Project</Badge>
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
+                        >
+                          <Github className="h-3.5 w-3.5" />
+                          View on GitHub
+                          <ExternalLink className="h-3 w-3 opacity-60" />
+                        </a>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6">
+                    {/* Overview */}
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
+
+                    {/* Tech stack */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Technologies Used</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((tech, i) => (
+                          <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Highlights grid */}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {project.highlights.map((h, i) => (
+                        <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
+                          <div className={`p-2 rounded-lg shrink-0 ${project.iconBg}`}>
+                            <h.icon className={`h-5 w-5 ${project.iconColor}`} />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── RAG Projects ── */}
+        {activeTab === "rag" && (
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+            {ragProjects.map((project, idx) => (
+              <Card key={idx} className="border-2 border-accent/20 overflow-hidden mb-6">
+                <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
+                      <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
+                    </div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
+                      >
+                        <Github className="h-3.5 w-3.5" />
+                        View on GitHub
+                        <ExternalLink className="h-3 w-3 opacity-60" />
+                      </a>
+                    </div>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="p-6">
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
+
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+                      Technologies Used
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech, i) => (
+                        <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {project.highlights.map((h, i) => (
+                      <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
+                        <div className={`p-2 rounded-lg shrink-0 ${project.iconBg}`}>
+                          <h.icon className={`h-5 w-5 ${project.iconColor}`} />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </CardContent>
-      </Card>
-    ))}
-  </div>
-)}
+        )}
+      </div>
+    </section>
+  )
+}
