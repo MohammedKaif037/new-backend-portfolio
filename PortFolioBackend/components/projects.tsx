@@ -338,7 +338,7 @@ export function Projects() {
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
-              
+              <a
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
