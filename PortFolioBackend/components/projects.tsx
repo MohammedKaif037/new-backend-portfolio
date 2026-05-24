@@ -92,6 +92,39 @@ const personalProjects = [
 
 const ragProjects = [
   {
+    title: "Recipe-to-Cart Agent",
+    tagline: "Agentic AI · Spring Boot · Redis Vector Store · LangChain4j",
+    overview: "An AI grocery agent inspired by Zepto that converts a plain recipe description into a ready-to-order cart. LangChain4j orchestrates a multi-step pipeline: the LLM parses and normalises ingredients, a pantry check skips what you already own, Redis Stack vector search finds the best catalog match per ingredient, and a second LLM call writes a natural-language explanation for every out-of-stock substitution. Results are semantically cached in Redis so identical queries return instantly.",
+    highlights: [
+      {
+        icon: Cpu,
+        title: "LangChain4j agent pipeline",
+        description: "Declarative @SystemMessage AI services handle ingredient parsing and swap explanation. @Tool-annotated methods expose pantry check and catalog search so the LLM can call them autonomously during reasoning."
+      },
+      {
+        icon: Database,
+        title: "Redis vector store + semantic cache",
+        description: "All 28 catalog products are embedded via text-embedding-3-small and indexed in Redis Stack on startup. Cosine KNN search finds semantically similar products. Cart responses are cached with a normalised key — same dish, different word order still hits the cache."
+      },
+      {
+        icon: Search,
+        title: "Graceful fallback & substitution",
+        description: "Out-of-stock products are automatically substituted with the closest in-category alternative. If Redis Stack is unavailable, the service silently falls back to tag-based search with zero downtime."
+      },
+      {
+        icon: Layers,
+        title: "Full-stack, zero extra server",
+        description: "Vanilla HTML/CSS/JS UI served directly by Spring Boot static resources. Live health status, animated progress steps, ingredient breakdown cards, and a sticky cart panel — no React or separate frontend server needed."
+      }
+    ],
+    tech: ["Java 21", "Spring Boot 3.2", "LangChain4j 0.31", "Redis Stack", "Vector Search", "ChatAnywhere LLM", "Docker Compose", "Vanilla JS"],
+    github: "https://github.com/MohammedKaif037/recipe-cart",
+    accentColor: "from-rose-500/20 to-orange-500/20",
+    badgeColor: "bg-rose-500/10 text-rose-400 border-rose-500/30",
+    iconColor: "text-rose-400",
+    iconBg: "bg-rose-500/10",
+  },
+  {
     title: "AI-Powered Order Assistant",
     tagline: "RAG · Spring Boot · LLM",
     overview: "A Spring Boot microservice that answers natural language questions about order status, inventory, and fulfillment. Uses a TF-IDF vector store for retrieval-augmented generation — so every AI answer is grounded in real database records, never hallucinated. Includes a full-stack frontend (vanilla HTML/CSS/JS) served by Spring Boot with zero extra dependencies.",
