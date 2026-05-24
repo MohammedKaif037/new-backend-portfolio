@@ -96,26 +96,10 @@ const ragProjects = [
     tagline: "Agentic AI · Spring Boot · Redis Vector Store · LangChain4j",
     overview: "An AI grocery agent inspired by Zepto that converts a plain recipe description into a ready-to-order cart. LangChain4j orchestrates a multi-step pipeline: the LLM parses and normalises ingredients, a pantry check skips what you already own, Redis Stack vector search finds the best catalog match per ingredient, and a second LLM call writes a natural-language explanation for every out-of-stock substitution. Results are semantically cached in Redis so identical queries return instantly.",
     highlights: [
-      {
-        icon: Cpu,
-        title: "LangChain4j agent pipeline",
-        description: "Declarative @SystemMessage AI services handle ingredient parsing and swap explanation. @Tool-annotated methods expose pantry check and catalog search so the LLM can call them autonomously during reasoning."
-      },
-      {
-        icon: Database,
-        title: "Redis vector store + semantic cache",
-        description: "All 28 catalog products are embedded via text-embedding-3-small and indexed in Redis Stack on startup. Cosine KNN search finds semantically similar products. Cart responses are cached with a normalised key — same dish, different word order still hits the cache."
-      },
-      {
-        icon: Search,
-        title: "Graceful fallback & substitution",
-        description: "Out-of-stock products are automatically substituted with the closest in-category alternative. If Redis Stack is unavailable, the service silently falls back to tag-based search with zero downtime."
-      },
-      {
-        icon: Layers,
-        title: "Full-stack, zero extra server",
-        description: "Vanilla HTML/CSS/JS UI served directly by Spring Boot static resources. Live health status, animated progress steps, ingredient breakdown cards, and a sticky cart panel — no React or separate frontend server needed."
-      }
+      { icon: Cpu, title: "LangChain4j agent pipeline", description: "Declarative @SystemMessage AI services handle ingredient parsing and swap explanation. @Tool-annotated methods expose pantry check and catalog search so the LLM can call them autonomously during reasoning." },
+      { icon: Database, title: "Redis vector store + semantic cache", description: "All 28 catalog products are embedded via text-embedding-3-small and indexed in Redis Stack on startup. Cosine KNN search finds semantically similar products. Cart responses are cached with a normalised key — same dish, different word order still hits the cache." },
+      { icon: Search, title: "Graceful fallback & substitution", description: "Out-of-stock products are automatically substituted with the closest in-category alternative. If Redis Stack is unavailable, the service silently falls back to tag-based search with zero downtime." },
+      { icon: Layers, title: "Full-stack, zero extra server", description: "Vanilla HTML/CSS/JS UI served directly by Spring Boot static resources. Live health status, animated progress steps, ingredient breakdown cards, and a sticky cart panel — no React or separate frontend server needed." }
     ],
     tech: ["Java 21", "Spring Boot 3.2", "LangChain4j 0.31", "Redis Stack", "Vector Search", "ChatAnywhere LLM", "Docker Compose", "Vanilla JS"],
     github: "https://github.com/MohammedKaif037/recipe-cart",
@@ -129,26 +113,10 @@ const ragProjects = [
     tagline: "RAG · Spring Boot · LLM",
     overview: "A Spring Boot microservice that answers natural language questions about order status, inventory, and fulfillment. Uses a TF-IDF vector store for retrieval-augmented generation — so every AI answer is grounded in real database records, never hallucinated. Includes a full-stack frontend (vanilla HTML/CSS/JS) served by Spring Boot with zero extra dependencies.",
     highlights: [
-      {
-        icon: Database,
-        title: "RAG pipeline",
-        description: "DocumentIndexer converts DB rows into text chunks at startup. TF-IDF cosine similarity retrieves the top-K most relevant chunks per query, injected into the LLM system prompt before calling ChatAnywhere."
-      },
-      {
-        icon: Layers,
-        title: "Live re-indexing",
-        description: "Updating an order status via PATCH /orders/{id}/status immediately re-indexes that document in the vector store — so the next AI query reflects the change without a restart."
-      },
-      {
-        icon: Cpu,
-        title: "Intent classification",
-        description: "Keyword fast-path first (free), LLM fallback only for ambiguous queries. Classifies into ORDER_STATUS, INVENTORY, FULFILLMENT, POLICY, or GENERAL to route retrieval efficiently."
-      },
-      {
-        icon: Code2,
-        title: "Swap-ready architecture",
-        description: "InMemoryVectorStore exposes the same public API as FAISS or ChromaDB. Swapping the vector backend is one bean replacement — migration comments included in the source."
-      }
+      { icon: Database, title: "RAG pipeline", description: "DocumentIndexer converts DB rows into text chunks at startup. TF-IDF cosine similarity retrieves the top-K most relevant chunks per query, injected into the LLM system prompt before calling ChatAnywhere." },
+      { icon: Layers, title: "Live re-indexing", description: "Updating an order status via PATCH /orders/{id}/status immediately re-indexes that document in the vector store — so the next AI query reflects the change without a restart." },
+      { icon: Cpu, title: "Intent classification", description: "Keyword fast-path first (free), LLM fallback only for ambiguous queries. Classifies into ORDER_STATUS, INVENTORY, FULFILLMENT, POLICY, or GENERAL to route retrieval efficiently." },
+      { icon: Code2, title: "Swap-ready architecture", description: "InMemoryVectorStore exposes the same public API as FAISS or ChromaDB. Swapping the vector backend is one bean replacement — migration comments included in the source." }
     ],
     tech: ["Java 17", "Spring Boot 3.2", "H2 / PostgreSQL", "TF-IDF Vector Store", "ChatAnywhere LLM", "RAG", "REST API", "Vanilla JS"],
     github: "https://github.com/MohammedKaif037/ai-rag-order-assistant",
@@ -159,7 +127,141 @@ const ragProjects = [
   }
 ]
 
-// ─── Component ───────────────────────────────────────────────────────────────
+// ─── Slider Component (Reusable) ─────────────────────────────────────────────
+
+function ProjectSlider({ projects }: { projects: typeof personalProjects }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [sliding, setSliding] = useState(false)
+  const [slideDir, setSlideDir] = useState<"left" | "right">("right")
+
+  const slideToProject = (index: number, dir: "left" | "right") => {
+    if (sliding) return
+    setSlideDir(dir)
+    setSliding(true)
+    setTimeout(() => {
+      setCurrentIndex(index)
+      setSliding(false)
+    }, 300)
+  }
+
+  const next = () => {
+    const nextIndex = (currentIndex + 1) % projects.length
+    slideToProject(nextIndex, "right")
+  }
+
+  const prev = () => {
+    const prevIndex = (currentIndex - 1 + projects.length) % projects.length
+    slideToProject(prevIndex, "left")
+  }
+
+  const project = projects[currentIndex]
+
+  return (
+    <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+      {/* Navigation dots and arrows */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex gap-2">
+          {projects.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => slideToProject(i, i > currentIndex ? "right" : "left")}
+              className={`transition-all duration-200 rounded-full ${
+                i === currentIndex 
+                  ? "bg-accent w-6 h-2.5" 
+                  : "bg-border hover:bg-muted-foreground w-2.5 h-2.5"
+              }`}
+            />
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">{currentIndex + 1} / {projects.length}</span>
+          <button
+            onClick={prev}
+            className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4 text-muted-foreground" />
+          </button>
+          <button
+            onClick={next}
+            className="p-1.5 rounded-lg border border-border hover:bg-secondary transition-colors"
+          >
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </button>
+        </div>
+      </div>
+
+      {/* Slide container */}
+      <div className="overflow-hidden">
+        <div
+          className={`transition-all duration-300 ${
+            sliding
+              ? slideDir === "right"
+                ? "-translate-x-8 opacity-0"
+                : "translate-x-8 opacity-0"
+              : "translate-x-0 opacity-100"
+          }`}
+        >
+          <Card className="border-2 border-accent/20 overflow-hidden">
+            {/* Gradient header */}
+            <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
+                  <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
+                </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
+                  >
+                    <Github className="h-3.5 w-3.5" />
+                    View on GitHub
+                    <ExternalLink className="h-3 w-3 opacity-60" />
+                  </a>
+                </div>
+              </div>
+            </CardHeader>
+
+            <CardContent className="p-6">
+              {/* Overview */}
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
+
+              {/* Tech stack */}
+              <div className="mb-6">
+                <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Technologies Used</h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech, i) => (
+                    <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* Highlights grid */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                {project.highlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
+                    <div className={`p-2 rounded-lg shrink-0 ${project.iconBg}`}>
+                      <h.icon className={`h-5 w-5 ${project.iconColor}`} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export function Projects() {
   const [activeTab, setActiveTab] = useState<"professional" | "personal" | "rag">("professional")
@@ -178,13 +280,13 @@ export function Projects() {
   }
 
   const next = () => {
-    const next = (currentPersonal + 1) % personalProjects.length
-    slideToProject(next, "right")
+    const nextIndex = (currentPersonal + 1) % personalProjects.length
+    slideToProject(nextIndex, "right")
   }
 
   const prev = () => {
-    const prev = (currentPersonal - 1 + personalProjects.length) % personalProjects.length
-    slideToProject(prev, "left")
+    const prevIndex = (currentPersonal - 1 + personalProjects.length) % personalProjects.length
+    slideToProject(prevIndex, "left")
   }
 
   const project = personalProjects[currentPersonal]
@@ -208,7 +310,7 @@ export function Projects() {
                   : "text-muted-foreground hover:text-primary"}
               `}
             >
-              {tab}
+              {tab === "rag" ? "RAG Projects" : tab}
             </button>
           ))}
         </div>
@@ -255,18 +357,20 @@ export function Projects() {
           </div>
         )}
 
-        {/* ── Personal ── */}
+        {/* ── Personal Slider ── */}
         {activeTab === "personal" && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-            {/* Nav header */}
+            {/* Navigation dots and arrows */}
             <div className="flex items-center justify-between mb-4">
               <div className="flex gap-2">
                 {personalProjects.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => slideToProject(i, i > currentPersonal ? "right" : "left")}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                      i === currentPersonal ? "bg-accent w-6" : "bg-border hover:bg-muted-foreground"
+                    className={`transition-all duration-200 rounded-full ${
+                      i === currentPersonal 
+                        ? "bg-accent w-6 h-2.5" 
+                        : "bg-border hover:bg-muted-foreground w-2.5 h-2.5"
                     }`}
                   />
                 ))}
@@ -300,7 +404,6 @@ export function Projects() {
                 }`}
               >
                 <Card className="border-2 border-accent/20 overflow-hidden">
-                  {/* Gradient header */}
                   <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                       <div>
@@ -324,10 +427,8 @@ export function Projects() {
                   </CardHeader>
 
                   <CardContent className="p-6">
-                    {/* Overview */}
                     <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
 
-                    {/* Tech stack */}
                     <div className="mb-6">
                       <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Technologies Used</h4>
                       <div className="flex flex-wrap gap-2">
@@ -337,7 +438,6 @@ export function Projects() {
                       </div>
                     </div>
 
-                    {/* Highlights grid */}
                     <div className="grid sm:grid-cols-2 gap-4">
                       {project.highlights.map((h, i) => (
                         <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
@@ -358,65 +458,8 @@ export function Projects() {
           </div>
         )}
 
-        {/* ── RAG Projects ── */}
-        {activeTab === "rag" && (
-          <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-            {ragProjects.map((project, idx) => (
-              <Card key={idx} className="border-2 border-accent/20 overflow-hidden mb-6">
-                <CardHeader className={`bg-gradient-to-r ${project.accentColor} border-b border-border`}>
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div>
-                      <CardTitle className="text-2xl text-primary">{project.title}</CardTitle>
-                      <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
-                    </div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 border border-border text-primary text-xs font-medium transition-colors"
-                      >
-                        <Github className="h-3.5 w-3.5" />
-                        View on GitHub
-                        <ExternalLink className="h-3 w-3 opacity-60" />
-                      </a>
-                    </div>
-                  </div>
-                </CardHeader>
-
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">{project.overview}</p>
-
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
-                      Technologies Used
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, i) => (
-                        <Badge key={i} variant="outline" className="border-accent/50 text-primary">{tech}</Badge>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {project.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-secondary/50">
-                        <div className={`p-2 rounded-lg shrink-0 ${project.iconBg}`}>
-                          <h.icon className={`h-5 w-5 ${project.iconColor}`} />
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-primary mb-1">{h.title}</h4>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{h.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
+        {/* ── RAG Slider ── */}
+        {activeTab === "rag" && <ProjectSlider projects={ragProjects} />}
       </div>
     </section>
   )
