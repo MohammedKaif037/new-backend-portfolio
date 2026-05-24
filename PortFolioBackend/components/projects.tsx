@@ -102,7 +102,7 @@ const ragProjects = [
       { icon: Layers, title: "Full-stack, zero extra server", description: "Vanilla HTML/CSS/JS UI served directly by Spring Boot static resources. Live health status, animated progress steps, ingredient breakdown cards, and a sticky cart panel — no React or separate frontend server needed." }
     ],
     tech: ["Java 21", "Spring Boot 3.2", "LangChain4j 0.31", "Redis Stack", "Vector Search", "ChatAnywhere LLM", "Docker Compose", "Vanilla JS"],
-    github: "https://github.com/MohammedKaif037/recipe-cart",
+    github: "https://github.com/MohammedKaif037/recipe-cart-agent",
     accentColor: "from-rose-500/20 to-orange-500/20",
     badgeColor: "bg-rose-500/10 text-rose-400 border-rose-500/30",
     iconColor: "text-rose-400",
