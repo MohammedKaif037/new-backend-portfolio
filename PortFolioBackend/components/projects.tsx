@@ -227,7 +227,7 @@ function ProjectSlider({ projects }: { projects: typeof personalProjects }) {
                   <CardDescription className="text-base mt-1">{project.tagline}</CardDescription>
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <Badge className={`w-fit border ${project.badgeColor}`}>RAG Project</Badge>
+                  <Badge className={`w-fit border ${project.badgeColor}`}>AI/RAG</Badge>
                   <a
                     href={project.github}
                     target="_blank"
