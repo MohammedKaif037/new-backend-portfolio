@@ -92,6 +92,23 @@ const personalProjects = [
 
 const ragProjects = [
   {
+  title: "SQL Agent",
+  tagline: "Text-to-SQL · Self-Correction · LLM Agent",
+  overview: "An intelligent SQL assistant that converts natural language questions into MySQL queries with a self-correcting agent loop. Uses GPT-3.5-turbo to generate SQL from plain English, executes against a live database, and automatically fixes errors with up to 3 retry attempts. Features real-time streaming feedback via Server-Sent Events, schema introspection, and a clean web interface — no SQL knowledge required.",
+  highlights: [
+    { icon: Cpu, title: "Self-Correction Agent Loop", description: "LLM generates SQL → executes → if error, sends error + original question back to LLM for fixing. Repeats up to 3 times with progressive improvements. Shows real-time status of each attempt via SSE streaming." },
+    { icon: Database, title: "Schema-Aware Generation", description: "Automatically introspects MySQL database schema (tables, columns, data types, foreign keys) and injects it into the LLM system prompt — so generated SQL always matches actual table structures." },
+    { icon: Search, title: "Intelligent Error Recovery", description: "When SQL fails, the LLM receives the exact MySQL error message and original question, then generates corrected SQL. Handles syntax errors, missing columns, join mistakes, and type mismatches automatically." },
+    { icon: Layers, title: "Full-Stack Implementation", description: "Flask backend with SSE streaming, vanilla HTML/CSS/JS frontend, MySQL integration, and REST APIs for both NL-to-SQL and raw SQL execution. Zero frontend framework dependencies." }
+  ],
+  tech: ["Python", "Flask", "MySQL", "GPT-3.5-turbo", "SSE", "REST API", "LLM Agent", "Self-Correction"],
+  github: "https://github.com/MohammedKaif037/natural-language-to-sql-agent", 
+  accentColor: "from-green-500/20 to-emerald-500/20",
+  badgeColor: "bg-green-500/10 text-green-400 border-green-500/30",
+  iconColor: "text-green-400",
+  iconBg: "bg-green-500/10",
+},
+  {
     title: "Recipe-to-Cart Agent",
     tagline: "Agentic AI · Spring Boot · Redis Vector Store · LangChain4j",
     overview: "An AI grocery agent inspired by Zepto that converts a plain recipe description into a ready-to-order cart. LangChain4j orchestrates a multi-step pipeline: the LLM parses and normalises ingredients, a pantry check skips what you already own, Redis Stack vector search finds the best catalog match per ingredient, and a second LLM call writes a natural-language explanation for every out-of-stock substitution. Results are semantically cached in Redis so identical queries return instantly.",
@@ -310,7 +327,7 @@ export function Projects() {
                   : "text-muted-foreground hover:text-primary"}
               `}
             >
-              {tab === "rag" ? "RAG Projects" : tab}
+              {tab === "rag" ? "RAG & AI" : tab}
             </button>
           ))}
         </div>
